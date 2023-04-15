@@ -30,7 +30,8 @@ import com.example.weatherapp.navigation.WeatherScreens
 
 @Composable
 fun WeatherSplashScreen(navController: NavController) {
- val scale = remember {
+    val defaultCity = "Kolkata"
+    val scale = remember {
      Animatable(0f)
  }
 
@@ -43,7 +44,7 @@ fun WeatherSplashScreen(navController: NavController) {
                  .getInterpolation(it)
          }))
 
-     navController.navigate(WeatherScreens.MainScreen.name)
+     navController.navigate(WeatherScreens.MainScreen.name +"/$defaultCity")
  } )
 
 

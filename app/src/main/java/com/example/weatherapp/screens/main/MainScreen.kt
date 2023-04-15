@@ -1,6 +1,7 @@
 package com.example.weatherapp.screens.main
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,13 +27,17 @@ import com.example.weatherapp.utils.formatDecimals
 import com.example.weatherapp.widgets.*
 
 @Composable
-fun MainScreen(navController: NavController,
-               mainViewModel: MainViewModel = hiltViewModel()) {
+fun MainScreen(
+    navController: NavController,
+    mainViewModel: MainViewModel = hiltViewModel(),
+    city: String?
+) {
+Log.d("TAG", "MainScreen: $city")
 
 
 
     val weatherData = produceState<DataOrException<Weather, Boolean, Exception>>(initialValue = DataOrException(loading = true)) {
-        value = mainViewModel.getWeatherData(city = "kolkata")
+        value = mainViewModel.getWeatherData(city = city.toString())
     }.value
 
     if (weatherData.loading == true) {
