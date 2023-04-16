@@ -8,8 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +32,7 @@ fun MainScreen(
     city: String?
 ) {
 Log.d("TAG", "MainScreen: $city")
+
 
 
 
@@ -74,57 +74,71 @@ fun MainContent(data: Weather) {
 
 
     val weatherItem = data.list[0]
-    Column(modifier = Modifier
-        .padding(4.dp)
-        .fillMaxWidth(),
+    Column(
+        modifier = Modifier
+            .padding(4.dp)
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-        Text(text = formatDate( weatherItem.dt),
+        Text(
+            text = formatDate(weatherItem.dt),
             style = MaterialTheme.typography.caption,
             color = MaterialTheme.colors.onSecondary,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(5.dp))
+            modifier = Modifier.padding(5.dp)
+        )
 
-        Surface(modifier = Modifier
-            .padding(4.dp)
-            .size(200.dp),
-                shape = CircleShape,
-                color = Color(0xFFFFC400)
+        Surface(
+            modifier = Modifier
+                .padding(4.dp)
+                .size(200.dp),
+            shape = CircleShape,
+            color = Color(0xFFFFC400)
         ) {
 
-            Column(verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 WeatherConditionImage(imageUrl = imageUrl)
-                Text(text = formatDecimals(weatherItem.temp.day) + "°", style = MaterialTheme.typography.h4,
-                        fontWeight =  FontWeight.ExtraBold)
+                Text(
+                    text = formatDecimals(weatherItem.temp.day) + "°",
+                    style = MaterialTheme.typography.h4,
+                    fontWeight = FontWeight.ExtraBold
+                )
                 Text(text = weatherItem.weather[0].main, fontStyle = FontStyle.Italic)
 
             }
 
         }
 
-        HumWiPrRow(weather = weatherItem )
+        HumWiPrRow(weather = weatherItem)
         Divider()
         SunRiseAndSetRow(weather = weatherItem)
-        Text(text ="This Week",
-             modifier = Modifier.padding(4.dp),
-             style = MaterialTheme.typography.subtitle1,
-             fontWeight = FontWeight.Bold)
-        
-        Surface(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+        Text(
+            text = "This Week",
+            modifier = Modifier.padding(4.dp),
+            style = MaterialTheme.typography.subtitle1,
+            fontWeight = FontWeight.Bold
+        )
+
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
             color = Color(0xFFEEF1EF),
             shape = RoundedCornerShape(size = 14.dp)
         ) {
-            LazyColumn(modifier = Modifier.padding(2.dp),
-                       contentPadding = PaddingValues(1.dp)
-            ){
-                items(items = data.list) { item: WeatherItem -> 
-                
-                WeatherDetailRow(weather = item)    
-                    
+            LazyColumn(
+                modifier = Modifier.padding(2.dp),
+                contentPadding = PaddingValues(1.dp)
+            ) {
+                items(items = data.list) { item: WeatherItem ->
+
+                    WeatherDetailRow(weather = item)
+
                 }
 
             }
@@ -132,7 +146,6 @@ fun MainContent(data: Weather) {
 
         }
     }
-
-
 }
+
 
